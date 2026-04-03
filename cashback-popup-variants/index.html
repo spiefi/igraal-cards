@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cashback Activation Popup — 6 Variants</title>
+  <link rel="stylesheet" href="/sandbox/nalu-bundle/igraal-tokens.css">
+  <link rel="stylesheet" href="/sandbox/nalu-bundle/nalu-components.css">
+  <script src="/sandbox/nalu-bundle/nalu-components.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #F2F2F2;
+      padding: 40px 20px 60px;
+    }
+
+    .page-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #888;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .page-subtitle {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .page-desc {
+      font-size: 14px;
+      color: #777;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 390px);
+      gap: 40px 32px;
+      justify-content: center;
+    }
+
+    /* Each variant cell */
+    .variant-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .variant-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #aaa;
+    }
+    .variant-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+    }
+    .variant-rationale {
+      font-size: 12px;
+      color: #888;
+      text-align: center;
+      max-width: 320px;
+      line-height: 1.5;
+    }
+
+    /* Phone shell */
+    .phone-shell {
+      width: 390px;
+      height: 680px;
+      background: #fff;
+      border-radius: 32px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    /* Backdrop */
+    .backdrop {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 40px;
+    }
+
+    .backdrop-dim {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+    }
+
+    /* Fake browser content behind popup */
+    .bg-site {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+    }
+    .bg-bar {
+      height: 48px;
+      background: #f8f8f8;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 8px;
+    }
+    .bg-url {
+      flex: 1;
+      background: #eee;
+      border-radius: 8px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      font-size: 11px;
+      color: #888;
+      gap: 6px;
+    }
+    .bg-lock { color: #4CAF50; font-size: 10px; }
+    .bg-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      overflow: hidden;
+    }
+    .bg-hero {
+      height: 160px;
+      background: linear-gradient(135deg, #f0f0f0 0%, #e4e4e4 100%);
+    }
+    .bg-lines {
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .bg-line {
+      height: 10px;
+      border-radius: 5px;
+      background: #e8e8e8;
+    }
+
+    /* =============================================
+       POPUP STYLES
+       ============================================= */
+
+    /* ----- V1: MINIMAL ----- */
+    .popup-v1 {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      background: #fff;
+      border-radius: 20px 20px 0 0;
+      padding: 32px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .v1-handle {
+      width: 36px;
+      height: 4px;
+      background: #ddd;
+      border-radius: 2px;
+      margin: 0 auto 28px;
+    }
+    .v1-retailer-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .v1-retailer-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #FF5722;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -1px;
+      flex-shrink: 0;
+    }
+    .v1-retailer-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #111;
+    }
+    .v1-retailer-sub {
+      font-size: 12px;
+      color: #888;
+      margin-top: 1px;
+    }
+    .v1-cashback-value {
+      font-size: 52px;
+      font-weight: 800;
+      color: #FD5A13;
+      letter-spacing: -2px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .v1-cashback-label {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 6px;
+    }
+    .v1-info-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 24px;
+    }
+    .v1-info-btn {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid #bbb;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #888;
+      flex-shrink: 0;
+      outline: none;
+    }
+    .v1-info-btn:focus { border-color: #FD5A13; color: #FD5A13; outline: 2px solid #FD5A13; outline-offset: 2px; }
+    .v1-info-text {
+      font-size: 12px;
+      color: #999;
+    }
+    .v1-cta {
+      width: 100%;
+      height: 52px;
+      background: #FD5A13;
+      border: none;
+      border-radius: 99px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+    .v1-dismiss {
+      width: 100%;
+      background: none;
+      border: none;
+      font-size: 14px;
+      color: #999;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    /* ----- V2: BOLD ----- */
+    .popup-v2 {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      background: #fff;
+      border-radius: 20px 20px 0 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .v2-header {
+      background: #FD5A13;
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+    }
+    .v2-handle {
+      width: 36px;
+      height: 4px;
+      background: rgba(255,255,255,0.35);
+      border-radius: 2px;
+      margin: 0 auto 20px;
+    }
+    .v2-brand-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .v2-logo {
+      width: 40px;
+      height: 40px;
+      background: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: #FF5722;
+      letter-spacing: -1px;
+    }
+    .v2-brand-text {
+      flex: 1;
+    }
+    .v2-brand-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .v2-brand-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+    }
+    .v2-boost-badge {
+      background: #fff;
+      color: #FD5A13;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 99px;
+    }
+    .v2-body {
+      padding: 20px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .v2-cashback-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .v2-pct {
+      font-size: 44px;
+      font-weight: 800;
+      color: #111;
+      letter-spacing: -1px;
+    }
+    .v2-pct-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: #555;
+    }
+    .v2-conditions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .v2-cond-text {
+      font-size: 12px;
+      color: #888;
+    }
+    .v2-info-btn {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid #ccc;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #888;
+      flex-shrink: 0;
+      outline: none;
+    }
+    .v2-info-btn:focus { border-color: #FD5A13; outline: 2px solid #FD5A13; outline-offset: 2px; }
+    .v2-cta {
+      width: 100%;
+      height: 52px;
+      background: #FD5A13;
+      border: none;
+      border-radius: 99px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .v2-dismiss {
+      width: 100%;
+      background: none;
+      border: none;
+      font-size: 14px;
+      color: #aaa;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    /* ----- V3: NUMBER FIRST ----- */
+    .popup-v3 {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      background: #fff;
+      border-radius: 20px 20px 0 0;
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .v3-handle {
+      width: 36px;
+      height: 4px;
+      background: #ddd;
+      border-radius: 2px;
+      margin: 0 auto 24px;
+    }
+    .v3-igraal-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .v3-igraal-logo {
+      width: 20px;
+      height: 20px;
+      background: #FD5A13;
+      border-radius: 50%;
+    }
+    .v3-igraal-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #FD5A13;
+      letter-spacing: 0.02em;
+    }
+    .v3-giant-number {
+      font-size: 88px;
+      font-weight: 900;
+      color: #111;
+      letter-spacing: -4px;
+      line-height: 1;
+      text-align: center;
+    }
+    .v3-giant-pct {
+      font-size: 36px;
+      font-weight: 800;
+      color: #FD5A13;
+      vertical-align: super;
+    }
+    .v3-label {
+      font-size: 15px;
+      color: #888;
+      text-align: center;
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+    .v3-retailer-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .v3-retailer-logo {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: #FF5722;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .v3-retailer-name {
+      font-size: 13px;
+      color: #555;
+      font-weight: 500;
+    }
+    .v3-info-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .v3-info-btn {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid #ccc;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #888;
+      outline: none;
+    }
+    .v3-info-btn:focus { border-color: #FD5A13; outline: 2px solid #FD5A13; outline-offset: 2px; }
+    .v3-info-text { font-size: 12px; color: #aaa; }
+    .v3-cta {
+      width: 100%;
+      height: 52px;
+      background: #FD5A13;
+      border: none;
+      border-radius: 99px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .v3-dismiss {
+      width: 100%;
+      background: none;
+      border: none;
+      font-size: 14px;
+      color: #aaa;
+      cursor: pointer;
+      padding: 8px;
+      text-align: center;
+    }
+
+    /* ----- V4: TRUST FIRST ----- */
+    .popup-v4 {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      background: #fff;
+      border-radius: 20px 20px 0 0;
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .v4-handle {
+      width: 36px;
+      height: 4px;
+      background: #ddd;
+      border-radius: 2px;
+      margin: 0 auto 24px;
+    }
+    .v4-trust-banner {
+      background: #E8F5E9;
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .v4-shield {
+      width: 32px;
+      height: 32px;
+      background: #4CAF50;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .v4-trust-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2E7D32;
+      line-height: 1.4;
+    }
+    .v4-trust-sub {
+      font-size: 11px;
+      color: #4CAF50;
+      margin-top: 1px;
+    }
+    .v4-offer-card {
+      border: 1.5px solid #eee;
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .v4-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #FF5722;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -1px;
+      flex-shrink: 0;
+    }
+    .v4-offer-info {
+      flex: 1;
+    }
+    .v4-retailer-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+    }
+    .v4-cashback {
+      font-size: 22px;
+      font-weight: 800;
+      color: #FD5A13;
+      margin-top: 2px;
+    }
+    .v4-conditions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .v4-cond-text { font-size: 12px; color: #999; }
+    .v4-info-btn {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid #ccc;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #999;
+      outline: none;
+    }
+    .v4-info-btn:focus { border-color: #FD5A13; outline: 2px solid #FD5A13; outline-offset: 2px; }
+    .v4-cta {
+      width: 100%;
+      height: 52px;
+      background: #FD5A13;
+      border: none;
+      border-radius: 99px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .v4-dismiss {
+      width: 100%;
+      background: none;
+      border: none;
+      font-size: 14px;
+      color: #aaa;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    /* ----- V5: PLAYFUL ----- */
+    .popup-v5 {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      background: #FFF8F5;
+      border-radius: 20px 20px 0 0;
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .v5-handle {
+      width: 36px;
+      height: 4px;
+      background: #f0cfc0;
+      border-radius: 2px;
+      margin: 0 auto 20px;
+    }
+    .v5-emoji-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .v5-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #FF5722;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -1px;
+    }
+    .v5-wave {
+      font-size: 28px;
+    }
+    .v5-headline {
+      font-size: 22px;
+      font-weight: 800;
+      color: #111;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .v5-headline span {
+      color: #FD5A13;
+    }
+    .v5-body {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .v5-tag-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .v5-tag {
+      background: #FFE9DF;
+      color: #C94300;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 99px;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .v5-conditions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .v5-cond-text { font-size: 12px; color: #aaa; }
+    .v5-info-btn {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid #ddd;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #bbb;
+      outline: none;
+    }
+    .v5-info-btn:focus { border-color: #FD5A13; outline: 2px solid #FD5A13; outline-offset: 2px; }
+    .v5-cta {
+      width: 100%;
+      height: 52px;
+      background: #FD5A13;
+      border: none;
+      border-radius: 99px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .v5-dismiss {
+      width: 100%;
+      background: none;
+      border: none;
+      font-size: 14px;
+      color: #bbb;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    /* ----- V6: URGENCY ----- */
+    .popup-v6 {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      background: #fff;
+      border-radius: 20px 20px 0 0;
+      overflow: hidden;
+    }
+    .v6-dark-header {
+      background: #1A1A2E;
+      padding: 24px 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .v6-handle {
+      width: 36px;
+      height: 4px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 2px;
+      margin: 0 auto 18px;
+    }
+    .v6-urgency-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .v6-on-rise {
+      background: linear-gradient(90deg, #FD5A13, #FF8C42);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 99px;
+    }
+    .v6-dot {
+      width: 6px;
+      height: 6px;
+      background: #4CAF50;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.8); }
+    }
+    .v6-dot-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.55);
+    }
+    .v6-brand-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .v6-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #FF5722;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -1px;
+    }
+    .v6-brand-info { flex: 1; }
+    .v6-brand-name { font-size: 15px; font-weight: 700; color: #fff; }
+    .v6-brand-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+    .v6-cashback-value {
+      font-size: 32px;
+      font-weight: 900;
+      color: #FD5A13;
+      letter-spacing: -1px;
+    }
+    .v6-body {
+      padding: 18px 24px 20px;
+    }
+    .v6-scarcity {
+      background: #FFF3E0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #E65100;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .v6-scarcity-icon { font-size: 16px; }
+    .v6-conditions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .v6-cond-text { font-size: 12px; color: #aaa; }
+    .v6-info-btn {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid #ddd;
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #aaa;
+      outline: none;
+    }
+    .v6-info-btn:focus { border-color: #FD5A13; outline: 2px solid #FD5A13; outline-offset: 2px; }
+    .v6-cta {
+      width: 100%;
+      height: 52px;
+      background: linear-gradient(90deg, #FD5A13, #FF8C42);
+      border: none;
+      border-radius: 99px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .v6-dismiss {
+      width: 100%;
+      background: none;
+      border: none;
+      font-size: 14px;
+      color: #bbb;
+      cursor: pointer;
+      padding: 8px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 390px;
+      }
+    }
+  </style>
+</head>
+<body data-Device="Mobile">
+
+  <p class="page-title">iGraal · Cashback Popup</p>
+  <h1 class="page-subtitle">6 Design Variants</h1>
+  <p class="page-desc">Each popup solves the same conversion moment — a different idea for how it persuades.</p>
+
+  <div class="grid">
+
+    <!-- ====== V1: MINIMAL ====== -->
+    <div class="variant-cell">
+      <span class="variant-label">V1</span>
+      <span class="variant-name">Minimal</span>
+      <p class="variant-rationale">White, sparse. The % number carries all the weight. Lets the deal speak without decoration.</p>
+      <div class="phone-shell">
+        <!-- BG site content -->
+        <div class="bg-site">
+          <div class="bg-bar">
+            <div class="bg-url"><span class="bg-lock">🔒</span> amazon.fr</div>
+          </div>
+          <div class="bg-content">
+            <div class="bg-hero"></div>
+            <div class="bg-lines">
+              <div class="bg-line" style="width:80%"></div>
+              <div class="bg-line" style="width:60%"></div>
+              <div class="bg-line" style="width:90%"></div>
+              <div class="bg-line" style="width:45%"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Backdrop -->
+        <div class="backdrop">
+          <div class="backdrop-dim"></div>
+          <div class="popup-v1">
+            <div class="v1-handle"></div>
+            <div class="v1-retailer-row">
+              <div class="v1-retailer-logo">Az</div>
+              <div>
+                <div class="v1-retailer-name">Amazon</div>
+                <div class="v1-retailer-sub">Partenaire iGraal</div>
+              </div>
+            </div>
+            <div class="v1-cashback-value">7%</div>
+            <div class="v1-cashback-label">de cashback sur votre achat</div>
+            <div class="v1-info-row">
+              <button class="v1-info-btn" aria-label="Voir les conditions">ⓘ</button>
+              <span class="v1-info-text">Conditions applicables</span>
+            </div>
+            <button class="v1-cta">Activer le cashback</button>
+            <button class="v1-dismiss">Non merci</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== V2: BOLD ====== -->
+    <div class="variant-cell">
+      <span class="variant-label">V2</span>
+      <span class="variant-name">Bold</span>
+      <p class="variant-rationale">Orange header band leads. Brand is inside the brand moment, not beside it. Boost badge in the header.</p>
+      <div class="phone-shell">
+        <div class="bg-site">
+          <div class="bg-bar">
+            <div class="bg-url"><span class="bg-lock">🔒</span> amazon.fr</div>
+          </div>
+          <div class="bg-content">
+            <div class="bg-hero"></div>
+            <div class="bg-lines">
+              <div class="bg-line" style="width:80%"></div>
+              <div class="bg-line" style="width:55%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="backdrop">
+          <div class="backdrop-dim"></div>
+          <div class="popup-v2">
+            <div class="v2-header">
+              <div class="v2-handle"></div>
+              <div class="v2-brand-row">
+                <div class="v2-logo">Az</div>
+                <div class="v2-brand-text">
+                  <div class="v2-brand-name">Amazon</div>
+                  <div class="v2-brand-sub">Partenaire iGraal</div>
+                </div>
+                <div class="v2-boost-badge">↑ EN HAUSSE</div>
+              </div>
+            </div>
+            <div class="v2-body">
+              <div class="v2-cashback-row">
+                <span class="v2-pct">7%</span>
+                <span class="v2-pct-label">de cashback</span>
+              </div>
+              <div class="v2-conditions">
+                <button class="v2-info-btn" aria-label="Voir les conditions">ⓘ</button>
+                <span class="v2-cond-text">Hors marketplace · Cashback sur facture TTC</span>
+              </div>
+              <button class="v2-cta">Activer le cashback</button>
+              <button class="v2-dismiss">Non merci</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== V3: NUMBER FIRST ====== -->
+    <div class="variant-cell">
+      <span class="variant-label">V3</span>
+      <span class="variant-name">Number First</span>
+      <p class="variant-rationale">Giant display %. Everything else is secondary. Pure value shock — the number is the design.</p>
+      <div class="phone-shell">
+        <div class="bg-site">
+          <div class="bg-bar">
+            <div class="bg-url"><span class="bg-lock">🔒</span> amazon.fr</div>
+          </div>
+          <div class="bg-content">
+            <div class="bg-hero"></div>
+            <div class="bg-lines">
+              <div class="bg-line" style="width:70%"></div>
+              <div class="bg-line" style="width:50%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="backdrop">
+          <div class="backdrop-dim"></div>
+          <div class="popup-v3">
+            <div class="v3-handle"></div>
+            <div class="v3-igraal-row">
+              <div class="v3-igraal-logo"></div>
+              <span class="v3-igraal-name">iGraal</span>
+            </div>
+            <div class="v3-giant-number">7<span class="v3-giant-pct">%</span></div>
+            <div class="v3-label">de cashback chez</div>
+            <div class="v3-retailer-row">
+              <div class="v3-retailer-logo">Az</div>
+              <span class="v3-retailer-name">Amazon</span>
+            </div>
+            <div class="v3-info-row">
+              <button class="v3-info-btn" aria-label="Voir les conditions">ⓘ</button>
+              <span class="v3-info-text">Conditions</span>
+            </div>
+            <button class="v3-cta">Activer le cashback</button>
+            <button class="v3-dismiss">Non merci</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== V4: TRUST FIRST ====== -->
+    <div class="variant-cell">
+      <span class="variant-label">V4</span>
+      <span class="variant-name">Trust First</span>
+      <p class="variant-rationale">Security signal before the deal. For users who hesitate — confirm safety, then sell the value.</p>
+      <div class="phone-shell">
+        <div class="bg-site">
+          <div class="bg-bar">
+            <div class="bg-url"><span class="bg-lock">🔒</span> amazon.fr</div>
+          </div>
+          <div class="bg-content">
+            <div class="bg-hero"></div>
+            <div class="bg-lines">
+              <div class="bg-line" style="width:80%"></div>
+              <div class="bg-line" style="width:60%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="backdrop">
+          <div class="backdrop-dim"></div>
+          <div class="popup-v4">
+            <div class="v4-handle"></div>
+            <div class="v4-trust-banner">
+              <div class="v4-shield">🛡️</div>
+              <div>
+                <div class="v4-trust-text">Activation 100% sécurisée</div>
+                <div class="v4-trust-sub">Aucune inscription requise · Jamais de spam</div>
+              </div>
+            </div>
+            <div class="v4-offer-card">
+              <div class="v4-logo">Az</div>
+              <div class="v4-offer-info">
+                <div class="v4-retailer-name">Amazon</div>
+                <div class="v4-cashback">Jusqu'à 7%</div>
+              </div>
+            </div>
+            <div class="v4-conditions">
+              <button class="v4-info-btn" aria-label="Voir les conditions">ⓘ</button>
+              <span class="v4-cond-text">Hors marketplace · Voir les conditions</span>
+            </div>
+            <button class="v4-cta">Activer le cashback</button>
+            <button class="v4-dismiss">Non merci</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== V5: PLAYFUL ====== -->
+    <div class="variant-cell">
+      <span class="variant-label">V5</span>
+      <span class="variant-name">Playful</span>
+      <p class="variant-rationale">Warm, human copy on a creamy background. Feels like a tip from a friend, not a system prompt.</p>
+      <div class="phone-shell">
+        <div class="bg-site">
+          <div class="bg-bar">
+            <div class="bg-url"><span class="bg-lock">🔒</span> amazon.fr</div>
+          </div>
+          <div class="bg-content">
+            <div class="bg-hero"></div>
+            <div class="bg-lines">
+              <div class="bg-line" style="width:75%"></div>
+              <div class="bg-line" style="width:55%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="backdrop">
+          <div class="backdrop-dim" style="background: rgba(0,0,0,0.35)"></div>
+          <div class="popup-v5">
+            <div class="v5-handle"></div>
+            <div class="v5-emoji-row">
+              <div class="v5-logo">Az</div>
+              <span class="v5-wave">👋</span>
+            </div>
+            <div class="v5-headline">
+              Hey ! Avant d'acheter<br>chez Amazon…
+            </div>
+            <div class="v5-body">
+              Activez votre cashback iGraal et récupérez <span style="color:#FD5A13;font-weight:700">jusqu'à 7%</span> de votre commande. Gratuit, instantané.
+            </div>
+            <div class="v5-tag-row">
+              <div class="v5-tag">🛍️ Hors marketplace</div>
+              <div class="v5-tag">✓ Sans engagement</div>
+            </div>
+            <div class="v5-conditions">
+              <button class="v5-info-btn" aria-label="Voir les conditions">ⓘ</button>
+              <span class="v5-cond-text">Voir toutes les conditions</span>
+            </div>
+            <button class="v5-cta">Activer le cashback</button>
+            <button class="v5-dismiss">Je passe cette fois</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== V6: URGENCY ====== -->
+    <div class="variant-cell">
+      <span class="variant-label">V6</span>
+      <span class="variant-name">Urgency</span>
+      <p class="variant-rationale">Dark header with live boost badge and scarcity signal. For FOMO-responsive users — you're about to miss this.</p>
+      <div class="phone-shell">
+        <div class="bg-site">
+          <div class="bg-bar">
+            <div class="bg-url"><span class="bg-lock">🔒</span> amazon.fr</div>
+          </div>
+          <div class="bg-content">
+            <div class="bg-hero"></div>
+            <div class="bg-lines">
+              <div class="bg-line" style="width:80%"></div>
+              <div class="bg-line" style="width:50%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="backdrop">
+          <div class="backdrop-dim" style="background: rgba(0,0,0,0.55)"></div>
+          <div class="popup-v6">
+            <div class="v6-dark-header">
+              <div class="v6-handle"></div>
+              <div class="v6-urgency-row">
+                <div class="v6-on-rise">↑ EN HAUSSE</div>
+                <div class="v6-dot"></div>
+                <span class="v6-dot-label">Cashback actif maintenant</span>
+              </div>
+              <div class="v6-brand-row">
+                <div class="v6-logo">Az</div>
+                <div class="v6-brand-info">
+                  <div class="v6-brand-name">Amazon</div>
+                  <div class="v6-brand-sub">Partenaire iGraal</div>
+                </div>
+                <div class="v6-cashback-value">7%</div>
+              </div>
+            </div>
+            <div class="v6-body">
+              <div class="v6-scarcity">
+                <span class="v6-scarcity-icon">⏳</span>
+                Taux boosté — offre limitée dans le temps
+              </div>
+              <div class="v6-conditions">
+                <button class="v6-info-btn" aria-label="Voir les conditions">ⓘ</button>
+                <span class="v6-cond-text">Hors marketplace · Cashback sur facture TTC</span>
+              </div>
+              <button class="v6-cta">Activer le cashback →</button>
+              <button class="v6-dismiss">Ignorer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="nalu-mount"></div>
+  <script>
+    // Nalu loaded — no component mount needed for this prototype
+    // All UI built with iGraal tokens + custom HTML following Nalu grammar
+    console.log('Cashback popup variants loaded. Nalu available:', typeof window.Nalu !== 'undefined');
+  </script>
+</body>
+</html>
